@@ -1,0 +1,6 @@
+version: "3"
+services:
+  postfixadmin:
+    image: localhost/volkerraschek/postfixadmin:latest
+    ports:
+    - 0.0.0.0:8080:80/tcp
