@@ -8,12 +8,12 @@ This is an alternative project to build a container image for
 [PostfixAdmin](https://github.com/postfixadmin/postfixadmin).
 
 The main goal of this alternative image is to support a kubernetes deployment
-via helm. Furthermore, the container image support configuring via environment
-variables.
+via helm. Furthermore, the container image support configuring via [environment
+variables](#supported-environment-variables).
 
-Checkout the helm repository of
-[volker-raschek](https://artifacthub.io/packages/helm/volker-raschek/postfixadmin)
-on [artifacthub.io](https://artifacthub.io) for more details.
+To deploy PostfixAdmin via `helm` checkout the repository on
+[artifacthub.io](https://artifacthub.io/packages/helm/volker-raschek/postfixadmin)
+for more details.
 
 ## Supported environment variables
 
