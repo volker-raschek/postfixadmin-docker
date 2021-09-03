@@ -58,9 +58,6 @@ steps:
   volumes:
   - name: docker_socket
     path: /var/run/docker.sock
-  when:
-    branch:
-    - master
 
 - name: push
   image: docker.io/volkerraschek/build-image:latest
@@ -195,7 +192,7 @@ steps:
       cpu: 50
       memory: 25M
   settings:
-    branch: master
+    branch: v3.2.x
     remote: ssh://git@github.com/volker-raschek/postfixadmin-docker.git
     force: true
     ssh_key:
