@@ -23,26 +23,31 @@ prefix `POSTFIXADMIN_`. You can take an example
 [configuration](https://github.com/postfixadmin/postfixadmin/blob/master/config.inc.php)
 from the upstream project.
 
-| name                                | default                     |
-| ----------------------------------- | --------------------------- |
-| `POSTFIXADMIN_ADMIN_EMAIL`          |                             |
-| `POSTFIXADMIN_ADMIN_SMTP_PASSWORD`  |                             |
-| `POSTFIXADMIN_ADMIN_NAME`           |                             |
-| `POSTFIXADMIN_DATABASE_TYPE`        | `sqlite`                    |
-| `POSTFIXADMIN_DATABASE_USER`        |                             |
-| `POSTFIXADMIN_DATABASE_PASSWORD`    |                             |
-| `POSTFIXADMIN_DATABASE_HOST`        |                             |
-| `POSTFIXADMIN_DATABASE_PORT`        |                             |
-| `POSTFIXADMIN_DATABASE_NAME`        | `/var/tmp/postfixadmin.db`  |
-| `POSTFIXADMIN_DEFAULT_LANGUAGE`     | `en`                        |
-| `POSTFIXADMIN_DATABASE_USE_SSL`     |                             |
-| `POSTFIXADMIN_DATABASE_KEY`         |                             |
-| `POSTFIXADMIN_DATABASE_CERT`        |                             |
-| `POSTFIXADMIN_DATABASE_CA`          |                             |
-| `POSTFIXADMIN_DATABASE_PREFIX`      |                             |
-| `POSTFIXADMIN_ENCRYPT`              | `md5crypt`                  |
-| `POSTFIXADMIN_SMTP_SERVER`          | `localhost`                 |
-| `POSTFIXADMIN_SMTP_PORT`            | `25`                        |
+| name                                | default                                     |
+| ----------------------------------- | ------------------------------------------- |
+| `POSTFIXADMIN_ADMIN_EMAIL`          |                                             |
+| `POSTFIXADMIN_ADMIN_SMTP_PASSWORD`  |                                             |
+| `POSTFIXADMIN_ADMIN_NAME`           |                                             |
+| `POSTFIXADMIN_DATABASE_TYPE`        | `sqlite`                                    |
+| `POSTFIXADMIN_DATABASE_USER`        |                                             |
+| `POSTFIXADMIN_DATABASE_PASSWORD`    |                                             |
+| `POSTFIXADMIN_DATABASE_HOST`        |                                             |
+| `POSTFIXADMIN_DATABASE_PORT`        |                                             |
+| `POSTFIXADMIN_DATABASE_NAME`        | `/var/tmp/postfixadmin.db`                  |
+| `POSTFIXADMIN_DEFAULT_LANGUAGE`     | `en`                                        |
+| `POSTFIXADMIN_DATABASE_USE_SSL`     |                                             |
+| `POSTFIXADMIN_DATABASE_KEY`         |                                             |
+| `POSTFIXADMIN_DATABASE_CERT`        |                                             |
+| `POSTFIXADMIN_DATABASE_CA`          |                                             |
+| `POSTFIXADMIN_DATABASE_PREFIX`      |                                             |
+| `POSTFIXADMIN_ENCRYPT`              | `md5crypt`                                  |
+| `POSTFIXADMIN_SMTP_SERVER`          | `localhost`                                 |
+| `POSTFIXADMIN_SMTP_PORT`            | `25`                                        |
+| `POSTFIXADMIN_SMTP_CLIENT`          |                                             |
+| `POSTFIXADMIN_SHOW_FOOTER_TEXT`     | `YES`                                       |
+| `POSTFIXADMIN_FOOTER_TEXT`          | `Return to change-this-to-your.domain.tld`  |
+| `POSTFIXADMIN_FOOTER_LINK`          | `http://change-this-to-your.domain.tld`     |
+| `POSTFIXADMIN_FETCHMAIL`            | `YES`                                       |
 
 ### POSTFIXADMIN_ADMIN_EMAIL
 
@@ -175,3 +180,32 @@ are documented
 To login into the `setup.php` page is the setup password required. This can be
 defined via the variable `POSTFIXADMIN_SETUP_PASSWORD`. The password will not be
 configured in the `config.local.php` as plain text. It will be encrypted.
+
+### POSTFIXADMIN_SMTP_CLIENT
+
+Hostname (FQDN) of the server hosting PostfixAdmin used in the `HELO` when
+sending emails from PostfixAdmin. The value of the environment will be
+configured as the following config setting: `$CONF['smtp_server']` and is empty
+by default.
+
+### POSTFIXADMIN_SMTP_SERVER
+
+Hostname (FQDN) of your mail server. The default value is `localhost`. The value
+of the environment will be configured as the following config setting:
+`$CONF['smtp_server']`.
+
+### POSTFIXADMIN_SMTP_PORT
+
+Port of your mail server. The default value is `25`. The value of the
+environment will be configured as the following config setting:
+`$CONF['smtp_port']`.
+
+### POSTFIXADMIN_SHOW_FOOTER_TEXT
+
+Enable or disable via `YES` or `NO` the footer text displayed on all sites. Use
+`POSTFIXADMIN_FOOTER_TEXT` and `POSTFIX_FOOTER_LINK` to customize the text.
+
+### POSTFIXADMIN_FETCHMAIL
+
+Enable or disable via `YES` or `NO` the fetchmail tab. It has nothing todo with
+the fetchmail cron job.
