@@ -40,6 +40,10 @@ if [ "${POSTFIXADMIN_DATABASE_TYPE}" = 'sqlite' ]; then
   fi
 fi
 
+# bycrypt POSTFIXADMIN_SETUP_PASSWORD
+if [ ! -z ${POSTFIXADMIN_SETUP_PASSWORD+x} ]; then
+  POSTFIXADMIN_SETUP_PASSWORD=$(htpasswd -bnBC 10 "" "${POSTFIXADMIN_SETUP_PASSWORD}" | tr -d ':\n')
+fi
 
 # create config.local.pgp with vaules from env with POSTFIXADMIN_ prefix
 POSTFIXADMIN_ENV_VARS=($(env | sort | grep --perl-regexp '^POSTFIXADMIN_.*'))

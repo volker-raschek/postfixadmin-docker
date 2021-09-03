@@ -24,7 +24,7 @@ ENV POSTFIXADMIN_DATABASE_TYPE=sqlite \
 # docker-entrypoint.sh dependencies
 RUN set -eux; \
   apt-get update; \
-  apt-get install --yes --no-install-recommends gosu; \
+  apt-get install --yes --no-install-recommends gosu apache2-utils; \
   rm --recursive --force /var/lib/apt/lists/*
 
 # Install required PHP extensions
