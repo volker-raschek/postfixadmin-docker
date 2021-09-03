@@ -178,15 +178,16 @@ are documented
 ### POSTFIXADMIN_SETUP_PASSWORD
 
 To login into the `setup.php` page is the setup password required. This can be
-defined via the variable `POSTFIXADMIN_SETUP_PASSWORD`. The password will not be
-configured in the `config.local.php` as plain text. It will be encrypted.
+defined via the variable `POSTFIXADMIN_SETUP_PASSWORD`. The password will be
+hashed via bcrypt and used as value for the setting `$CONF['setup_password']` in
+the config file `config.local.php`.
 
 ### POSTFIXADMIN_SMTP_CLIENT
 
 Hostname (FQDN) of the server hosting PostfixAdmin used in the `HELO` when
 sending emails from PostfixAdmin. The value of the environment will be
-configured as the following config setting: `$CONF['smtp_server']` and is empty
-by default.
+configured as the following config setting and is empty by default:
+`$CONF['smtp_client']`.
 
 ### POSTFIXADMIN_SMTP_SERVER
 
