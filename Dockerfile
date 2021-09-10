@@ -28,39 +28,42 @@ RUN set -eux; \
 
 # Install required PHP extensions
 RUN set -ex; \
-  savedAptMark="$(apt-mark showmanual)"; \
-  apt-get update; \
-  apt-get install --yes --no-install-recommends \
-    libc-client2007e-dev \
-    libkrb5-dev \
-    libpq-dev \
-    libsqlite3-dev; \
-  docker-php-ext-configure imap --with-imap-ssl --with-kerberos; \
-  docker-php-ext-install -j "$(nproc)" \
-    imap \
-    pdo_mysql \
-    pdo_pgsql \
-    pdo_sqlite \
-    pgsql; \
-  apt-mark auto '.*' > /dev/null; \
-  apt-mark manual $savedAptMark; \
-    ldd "$(php -r 'echo ini_get("extension_dir");')"/*.so \
-    | awk '/=>/ { print $3 }' \
-    | sort -u \
-    | xargs -r dpkg-query -S \
-    | cut -d: -f1 \
-    | sort -u \
-    | xargs -rt apt-mark manual; \
-  apt-get purge --yes --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-  rm --recursive --force /var/lib/apt/lists/*
+    savedAptMark="$(apt-mark showmanual)"; \
+    apt-get update; \
+    apt-get install --yes --no-install-recommends \
+      libc-client2007e-dev \
+      libkrb5-dev \
+      libpq-dev \
+      libsqlite3-dev; \
+    docker-php-ext-configure imap --with-imap-ssl --with-kerberos; \
+    docker-php-ext-install -j "$(nproc)" \
+      imap \
+      pdo_mysql \
+      pdo_pgsql \
+      pdo_sqlite \
+      pgsql; \
+    apt-mark auto '.*' > /dev/null; \
+    apt-mark manual $savedAptMark; \
+      ldd "$(php -r 'echo ini_get("extension_dir");')"/*.so \
+      | awk '/=>/ { print $3 }' \
+      | sort -u \
+      | xargs -r dpkg-query -S \
+      | cut -d: -f1 \
+      | sort -u \
+      | xargs -rt apt-mark manual; \
+    if [ ! -z ${POSTFIXADMIN_VERSION} ]; then \
+      curl --fail --silent --show-error --location "https://github.com/postfixadmin/postfixadmin/archive/postfixadmin-${POSTFIXADMIN_VERSION}.tar.gz" --output postfixadmin.tar.gz; \
+      tar --extract --file postfixadmin.tar.gz --directory /var/www/html --strip-components=1; \
+      rm postfixadmin.tar.gz; \
+    else \
+      apt-get install --yes git; \
+      git clone https://github.com/postfixadmin/postfixadmin.git /var/www/html; \
+    fi; \
+    apt-get purge --yes --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    rm --recursive --force /var/lib/apt/lists/*
 
-RUN set -eu; \
-  curl --fail --silent --show-error --location "https://github.com/postfixadmin/postfixadmin/archive/postfixadmin-${POSTFIXADMIN_VERSION}.tar.gz" --output postfixadmin.tar.gz ; \
-  tar --extract --file postfixadmin.tar.gz --directory /var/www/html --strip-components=1; \
-  rm postfixadmin.tar.gz; \
-  # Does not exist in tarball but is required
-  mkdir --parents /var/www/html/templates_c; \
-  chown --recursive www-data:www-data /var/www/html
+RUN mkdir --parents /var/www/html/templates_c; \
+    chown --recursive www-data:www-data /var/www/html
 
 COPY entrypoint.sh /usr/local/bin/
 

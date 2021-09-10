@@ -20,7 +20,6 @@ PHONY:=container-image/build
 container-image/build:
 	${CONTAINER_RUNTIME} build \
 		--build-arg POSTFIXADMIN_VERSION=${POSTFIXADMIN_VERSION} \
-		--build-arg POSTFIXADMIN_SHA512=${POSTFIXADMIN_SHA512} \
 		--file Dockerfile \
 		--no-cache \
 		--pull \
