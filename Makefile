@@ -1,6 +1,3 @@
-POSTFIXADMIN_VERSION:=3.3.10
-POSTFIXADMIN_SHA512:=e00fc9ea343a928976d191adfa01020ee0c6ddbe80a39e01ca2ee414a18247958f033970f378fe4a9974636172a5e094e57117ee9ac7b930c592f433097a7aca
-
 # CONTAINER_RUNTIME
 # The CONTAINER_RUNTIME variable will be used to specified the path to a
 # container runtime. This is needed to start and run a container image.

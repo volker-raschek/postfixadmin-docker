@@ -11,7 +11,7 @@ steps:
 - name: markdown lint
   commands:
   - markdownlint *.md
-  image: docker.io/tmknom/markdownlint:0.23.1
+  image: docker.io/volkerraschek/markdownlint:0.28.1
   resources:
     limits:
       cpu: 50
@@ -44,7 +44,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: build-latest
+name: latest-amd64
 
 platform:
   os: linux
@@ -52,36 +52,17 @@ platform:
 
 steps:
 - name: build
-  image: docker.io/volkerraschek/build-image:latest
-  commands:
-  - make container-image/build
-  volumes:
-  - name: docker_socket
-    path: /var/run/docker.sock
-  when:
-    branch:
-    - master
-
-- name: push
-  image: docker.io/volkerraschek/build-image:latest
-  commands:
-  - make container-image/push
-  environment:
-    POSTFIXADMIN_IMAGE_REGISTRY_PASSWORD:
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    auto_tag: false
+    tags: latest-amd64
+    repo: volkerraschek/postfixadmin
+    username:
+      from_secret: container_image_registry_user
+    password:
       from_secret: container_image_registry_password
-  volumes:
-  - name: docker_socket
-    path: /var/run/docker.sock
-  when:
-    branch:
-    - master
-    repo:
-    - volker.raschek/postfixadmin-docker
-
-- name: delete
-  image: docker.io/volkerraschek/build-image:latest
-  commands:
-  - make container-image/delete
+    no_cache: true
   volumes:
   - name: docker_socket
     path: /var/run/docker.sock
@@ -118,7 +99,108 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: build-tagged
+name: latest-armv7
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: build
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    auto_tag: false
+    tags: latest-armv7
+    repo: volkerraschek/postfixadmin
+    username:
+      from_secret: container_image_registry_user
+    password:
+      from_secret: container_image_registry_password
+    no_cache: true
+  when:
+    branch:
+    - master
+
+- name: notify
+  image: drillster/drone-email
+  environment:
+    PLUGIN_HOST:
+      from_secret: smtp_host
+    PLUGIN_USERNAME:
+      from_secret: smtp_username
+    PLUGIN_PASSWORD:
+      from_secret: smtp_password
+    PLUGIN_FROM:
+      from_secret: smtp_mail_address
+  volumes:
+  - name: docker_socket
+    path: /var/run/docker.sock
+  when:
+    status:
+    - changed
+    - failure
+
+volumes:
+- name: docker_socket
+  host:
+    path: /var/run/docker.sock
+
+trigger:
+  event:
+    exclude:
+    - tag
+
+---
+kind: pipeline
+type: kubernetes
+name: latest-manifest
+
+steps:
+- name: build-manifest
+  image: plugins/manifest
+  settings:
+    auto_tag: false
+    ignore_missing: true
+    spec: manifest.tmpl
+    username:
+      from_secret: container_image_registry_user
+    password:
+      from_secret: container_image_registry_password
+
+- name: notify
+  image: docker.io/drillster/drone-email:latest
+  environment:
+    PLUGIN_HOST:
+      from_secret: smtp_host
+    PLUGIN_USERNAME:
+      from_secret: smtp_username
+    PLUGIN_PASSWORD:
+      from_secret: smtp_password
+    PLUGIN_FROM:
+      from_secret: smtp_mail_address
+  resources:
+    limits:
+      cpu: 50
+      memory: 25M
+  when:
+    status:
+    - changed
+    - failure
+
+depends_on:
+- latest-amd64
+- latest-armv7
+
+trigger:
+  event:
+    exclude:
+    - tag
+
+---
+kind: pipeline
+type: docker
+name: tagged-amd64
 
 platform:
   os: linux
@@ -126,28 +208,19 @@ platform:
 
 steps:
 - name: build
-  image: docker.io/volkerraschek/build-image:latest
-  commands:
-  - make container-image/build POSTFIXADMIN_IMAGE_VERSION=${DRONE_TAG}
-  volumes:
-  - name: docker_socket
-    path: /var/run/docker.sock
-
-- name: push
-  image: docker.io/volkerraschek/build-image:latest
-  commands:
-  - make container-image/push POSTFIXADMIN_IMAGE_VERSION=${DRONE_TAG}
-  environment:
-    POSTFIXADMIN_IMAGE_REGISTRY_PASSWORD:
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    auto_tag: true
+    auto_tag_suffix: amd64
+    repo: volkerraschek/postfixadmin
+    username:
+      from_secret: container_image_registry_user
+    password:
       from_secret: container_image_registry_password
-  volumes:
-  - name: docker_socket
-    path: /var/run/docker.sock
-
-- name: delete
-  image: docker.io/volkerraschek/build-image:latest
-  commands:
-  - make container-image/delete POSTFIXADMIN_IMAGE_VERSION=${DRONE_TAG}
+    build_args:
+    - POSTFIXADMIN_VERSION=${DRONE_TAG}
+    no_cache: true
   volumes:
   - name: docker_socket
     path: /var/run/docker.sock
@@ -178,6 +251,109 @@ trigger:
   - tag
   repo:
   - volker.raschek/postfixadmin-docker
+
+---
+kind: pipeline
+type: docker
+name: tagged-armv7
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: build
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+    auto_tag: true
+    auto_tag_suffix: armv7
+    repo: volkerraschek/postfixadmin
+    username:
+      from_secret: container_image_registry_user
+    password:
+      from_secret: container_image_registry_password
+    build_args:
+    - POSTFIXADMIN_VERSION=${DRONE_TAG}
+    no_cache: true
+  volumes:
+  - name: docker_socket
+    path: /var/run/docker.sock
+
+- name: notify
+  image: drillster/drone-email
+  environment:
+    PLUGIN_HOST:
+      from_secret: smtp_host
+    PLUGIN_USERNAME:
+      from_secret: smtp_username
+    PLUGIN_PASSWORD:
+      from_secret: smtp_password
+    PLUGIN_FROM:
+      from_secret: smtp_mail_address
+  when:
+    status:
+    - changed
+    - failure
+
+volumes:
+- name: docker_socket
+  host:
+    path: /var/run/docker.sock
+
+trigger:
+  event:
+  - tag
+  repo:
+  - volker.raschek/postfixadmin-docker
+
+---
+kind: pipeline
+type: kubernetes
+name: tagged-manifest
+
+steps:
+- name: build-manifest
+  image: plugins/manifest
+  settings:
+    auto_tag: true
+    ignore_missing: true
+    spec: manifest.tmpl
+    username:
+      from_secret: container_image_registry_user
+    password:
+      from_secret: container_image_registry_password
+
+- name: notify
+  image: docker.io/drillster/drone-email:latest
+  environment:
+    PLUGIN_HOST:
+      from_secret: smtp_host
+    PLUGIN_USERNAME:
+      from_secret: smtp_username
+    PLUGIN_PASSWORD:
+      from_secret: smtp_password
+    PLUGIN_FROM:
+      from_secret: smtp_mail_address
+  resources:
+    limits:
+      cpu: 50
+      memory: 25M
+  when:
+    status:
+    - changed
+    - failure
+
+depends_on:
+- tagged-amd64
+- tagged-armv7
+
+trigger:
+  event:
+  - tag
+  repo:
+  - volker.raschek/postfixadmin-docker
+
 ---
 kind: pipeline
 type: kubernetes

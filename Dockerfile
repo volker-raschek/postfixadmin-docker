@@ -1,8 +1,7 @@
 FROM docker.io/library/php:7.4-apache
 
 # POSTFIXADMIN VERSION
-ARG POSTFIXADMIN_VERSION \
-    POSTFIXADMIN_SHA512
+ARG POSTFIXADMIN_VERSION
 
 # APACHE
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
@@ -57,7 +56,6 @@ RUN set -ex; \
 
 RUN set -eu; \
   curl --fail --silent --show-error --location "https://github.com/postfixadmin/postfixadmin/archive/postfixadmin-${POSTFIXADMIN_VERSION}.tar.gz" --output postfixadmin.tar.gz ; \
-  echo "${POSTFIXADMIN_SHA512} *postfixadmin.tar.gz" | sha512sum -c -; \
   tar --extract --file postfixadmin.tar.gz --directory /var/www/html --strip-components=1; \
   rm postfixadmin.tar.gz; \
   # Does not exist in tarball but is required
