@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automerge": false,
+  "automergeStrategy": "merge-commit",
+  "automergeType": "pr",
+  "rebaseLabel": "renovate/rebase",
+  "rebaseWhen": "behind-base-branch",
+  "regexManagers": [
+    {
+      "description": "Update postfixadmin git tag",
+      "fileMatch": [
+        "^Dockerfile$"
+      ],
+      "matchStrings": [
+        "ARG POSTFIXADMIN_VERSION=(?<currentValue>.*?)\n"
+      ],
+      "depNameTemplate": "postfixadmin/postfixadmin",
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "regex:^(postfixadmin-)?(v)?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\s"
+    }
+  ]
+}
