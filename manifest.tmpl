@@ -18,3 +18,9 @@ manifests:
       architecture: arm
       os: linux
       variant: v7
+  -
+    image: volkerraschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}-arm64-v8
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8
