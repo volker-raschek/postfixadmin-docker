@@ -30,8 +30,7 @@
         "POSTFIXADMIN_VERSION\\?=(?<currentValue>.*?)\n"
       ],
       "datasourceTemplate": "github-tags",
-      "depNameTemplate": "postfixadmin",
-      "lookupNameTemplate": "postfixadmin/postfixadmin",
+      "depNameTemplate": "postfixadmin/postfixadmin",
       "versioningTemplate": "regex:^(postfixadmin-)?(v)?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\s$"
     }
   ]
