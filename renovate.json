@@ -12,15 +12,12 @@
       "matchUpdateTypes": [ "minor", "patch"]
     },
     {
-      "addLabels": [ "renovate/postfixadmin", "renovate/automerge" ],
+      "description": "Trim leading postfixadmin- from git tag",
+      "addLabels": [ "renovate/postfixadmin" ],
       "automerge": false,
+      "extractVersion": "^postfixadmin-(?<version>\\d+\\.\\d+\\.\\d+)$",
       "matchPackageNames": [ "postfixadmin" ],
       "matchManagers": [ "regex" ]
-    },
-    {
-      "description": "Trim leading postfixadmin- from git tag",
-      "matchPackageNames": "postfixadmin/postfixadmin",
-      "extractVersion": "^(postfixadmin-)?(v)?(<?version>\\d+\\.\\d+.\\d+)(\\s*)?$"
     }
   ],
   "rebaseLabel": "renovate/rebase",
