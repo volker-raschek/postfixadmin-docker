@@ -31,7 +31,7 @@
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "postfixadmin/postfixadmin",
-      "versioningTemplate": "regex:^(postfixadmin-)?(v)?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\s$"
+      "versioningTemplate": "regex:^(postfixadmin-)?(v)?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\s*)?$"
     }
   ]
 }
