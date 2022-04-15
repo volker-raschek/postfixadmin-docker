@@ -16,6 +16,11 @@
       "automerge": false,
       "matchPackageNames": [ "postfixadmin" ],
       "matchManagers": [ "regex" ]
+    },
+    {
+      "description": "Trim leading postfixadmin- from git tag",
+      "matchPackageNames": "postfixadmin/postfixadmin",
+      "extractVersion": "^(postfixadmin-)?(v)?(<?version>\\d+\\.\\d+.\\d+)(\\s*)?$"
     }
   ],
   "rebaseLabel": "renovate/rebase",
