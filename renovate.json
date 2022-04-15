@@ -16,7 +16,7 @@
       "addLabels": [ "renovate/postfixadmin" ],
       "automerge": false,
       "extractVersion": "^postfixadmin-(?<version>\\d+\\.\\d+\\.\\d+)$",
-      "matchPackageNames": [ "postfixadmin" ],
+      "matchPackageNames": [ "postfixadmin/postfixadmin" ],
       "matchManagers": [ "regex" ]
     }
   ],
