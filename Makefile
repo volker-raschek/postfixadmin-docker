@@ -5,7 +5,7 @@ POSTFIXADMIN_VERSION?=3.3.11
 # CONTAINER_RUNTIME
 # The CONTAINER_RUNTIME variable will be used to specified the path to a
 # container runtime. This is needed to start and run a container image.
-CONTAINER_RUNTIME?=$(shell which docker)
+CONTAINER_RUNTIME?=$(shell which podman)
 
 # POSTFIXADMIN_IMAGE_REGISTRY_NAME
 # Defines the name of the new container to be built using several variables.
