@@ -1,4 +1,4 @@
-FROM docker.io/library/php:7.4-apache
+FROM docker.io/library/php:8.1-apache
 
 # POSTFIXADMIN VERSION
 ARG POSTFIXADMIN_VERSION
