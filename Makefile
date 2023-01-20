@@ -1,6 +1,6 @@
 # POSTFIXADMIN_VERSION
 # Only required to install a specifiy version
-POSTFIXADMIN_VERSION?=3.3.11
+POSTFIXADMIN_VERSION?=3.3.13
 
 # CONTAINER_RUNTIME
 # The CONTAINER_RUNTIME variable will be used to specified the path to a
