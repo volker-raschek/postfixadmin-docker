@@ -128,8 +128,8 @@ MD041:
 # MD044/proper-names - Proper names should have the correct capitalization
 MD044:
   # List of proper names
-  names:
-  - PostfixAdmin
+  names: []
+  # - PostfixAdmin
   # Include code blocks
   code_blocks: false
 
