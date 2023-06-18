@@ -12,6 +12,14 @@
       "matchUpdateTypes": [ "minor", "patch"]
     },
     {
+      "description": "Automatically update patch version of used container images in docker files",
+      "addLabels": [ "renovate/container-image", "renovate/automerge" ],
+      "automerge": true,
+      "matchBaseBranches": [ "master" ],
+      "matchManagers": [ "dockerfile" ],
+      "matchUpdateTypes": [ "patch" ]
+    },
+    {
       "description": "Trim leading postfixadmin- from git tag",
       "addLabels": [ "renovate/postfixadmin" ],
       "automerge": false,
