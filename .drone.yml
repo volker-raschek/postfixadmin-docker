@@ -452,12 +452,17 @@ depends_on:
 - latest-arm-v7
 - latest-arm64-v8
 
+# docker.io/plugins/manifest only for amd64 architectures available
+node_selector:
+  kubernetes.io/os: linux
+  kubernetes.io/arch: amd64
+
 steps:
 - name: clone
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build-manifest
-  image: docker.io/plugins/manifest:latest
+  image: docker.io/plugins/manifest:1.4.0
   settings:
     auto_tag: false
     ignore_missing: true
@@ -751,12 +756,17 @@ depends_on:
 - tagged-arm-v7
 - tagged-arm64-v8
 
+# docker.io/plugins/manifest only for amd64 architectures available
+node_selector:
+  kubernetes.io/os: linux
+  kubernetes.io/arch: amd64
+
 steps:
 - name: clone
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build-manifest
-  image: docker.io/plugins/manifest:latest
+  image: docker.io/plugins/manifest:1.4.0
   settings:
     auto_tag: true
     ignore_missing: true
