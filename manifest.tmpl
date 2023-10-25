@@ -1,4 +1,4 @@
-image: volkerraschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}
+image: git.cryptic.systems/volker.raschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}
 {{#if build.tags}}
 tags:
 {{#each build.tags}}
@@ -8,12 +8,12 @@ tags:
 {{/if}}
 manifests:
   -
-    image: volkerraschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}-amd64
+    image: git.cryptic.systems/volker.raschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}-amd64
     platform:
       architecture: amd64
       os: linux
   -
-    image: volkerraschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}-arm64-v8
+    image: git.cryptic.systems/volker.raschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}-arm64-v8
     platform:
       architecture: arm64
       os: linux
