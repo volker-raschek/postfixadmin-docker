@@ -13,12 +13,6 @@ manifests:
       architecture: amd64
       os: linux
   -
-    image: volkerraschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}-armv7
-    platform:
-      architecture: arm
-      os: linux
-      variant: v7
-  -
     image: volkerraschek/postfixadmin:{{#if build.tag}}{{trimPrefix "v" build.tag}}{{else}}latest{{/if}}-arm64-v8
     platform:
       architecture: arm64
