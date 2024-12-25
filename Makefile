@@ -1,6 +1,6 @@
 # POSTFIXADMIN_VERSION
 # Only required to install a specifiy version
-POSTFIXADMIN_VERSION?=3.3.14
+POSTFIXADMIN_VERSION?=3.3.15
 
 # PODMAN_BIN's and tools
 PODMAN_BIN?=$(shell which podman)
