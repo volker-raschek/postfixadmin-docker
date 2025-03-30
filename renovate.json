@@ -1,44 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "assignees": [ "volker.raschek" ],
-  "labels": [ "renovate" ],
-  "packageRules": [
-    {
-      "addLabels": [ "renovate/droneci", "renovate/automerge" ],
-      "automerge": true,
-      "matchManagers": "droneci",
-      "matchUpdateTypes": [ "minor", "patch"]
-    },
-    {
-      "description": "Automatically update patch version of used container images in docker files",
-      "addLabels": [ "renovate/container-image", "renovate/automerge" ],
-      "automerge": true,
-      "matchManagers": [ "dockerfile" ],
-      "matchUpdateTypes": [ "patch" ]
-    },
-    {
-      "description": "Trim leading postfixadmin- from git tag",
-      "addLabels": [ "renovate/postfixadmin" ],
-      "automerge": false,
-      "extractVersion": "^postfixadmin-(?<version>\\d+\\.\\d+\\.\\d+)$",
-      "matchPackageNames": [ "postfixadmin/postfixadmin" ],
-      "matchManagers": [ "regex" ]
-    }
-  ],
-  "rebaseLabel": "renovate/rebase",
-  "rebaseWhen": "behind-base-branch",
-  "regexManagers": [
-    {
-      "description": "Update postfixadmin git tag",
-      "fileMatch": [
-        "^Makefile$"
-      ],
-      "matchStrings": [
-        "POSTFIXADMIN_VERSION\\?=(?<currentValue>.*?)\n"
-      ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "postfixadmin/postfixadmin",
-      "versioningTemplate": "regex:^(postfixadmin-)?(v)?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\s*)?$"
-    }
+  "extends": [
+    "local>volker.raschek/renovate-config:default#master",
+    "local>volker.raschek/renovate-config:container#master",
+    "local>volker.raschek/renovate-config:actions#master",
+    "local>volker.raschek/renovate-config:regexp#master"
   ]
 }

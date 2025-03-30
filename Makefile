@@ -1,6 +1,6 @@
 # POSTFIXADMIN_VERSION
-# Only required to install a specifiy version
-POSTFIXADMIN_VERSION?=3.3.15
+# Only required to install a specify version
+POSTFIXADMIN_VERSION?=3.3.15 # renovate: datasource=github-tags depName=postfixadmin/postfixadmin extractVersion='postfixadmin-(?<version>\\d+\\.\\d+\\.\\d+)$'
 
 # PODMAN_BIN's and tools
 PODMAN_BIN?=$(shell which podman)
