@@ -1,6 +1,5 @@
 # PostfixAdmin
 
-[![Build Status](https://drone.cryptic.systems/api/badges/volker.raschek/postfixadmin-docker/status.svg)](https://drone.cryptic.systems/volker.raschek/postfixadmin-docker)
 [![Docker Pulls](https://img.shields.io/docker/pulls/volkerraschek/postfixadmin)](https://hub.docker.com/r/volkerraschek/postfixadmin)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/volker-raschek)](https://artifacthub.io/packages/search?repo=volker-raschek)
 
