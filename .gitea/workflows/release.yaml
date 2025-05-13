@@ -1,0 +1,101 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - "**"
+
+jobs:
+  push-arm64:
+    runs-on: ubuntu-latest-arm64
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: docker/setup-qemu-action@v3.6.0
+      - uses: docker/setup-buildx-action@v3.10.0
+
+      - uses: docker/login-action@v3.4.0
+        with:
+          registry: git.cryptic.systems
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GIT_CRYPTIC_SYSTEMS_PACKAGE_REGISTRY_TOKEN }}
+
+      - name: Build and push image
+        run: |
+          TAG=$(echo ${{ github.ref_name }} | sed 's/v//gm')
+
+          docker buildx build \
+            --build-arg POSTFIXADMIN_VERSION=${{ github.ref_name }} \
+            --file Dockerfile \
+            --platform linux/arm64 \
+            --provenance false \
+            --push \
+            --tag git.cryptic.systems/volker.raschek/postfixadmin:${TAG}-arm64 \
+            .
+
+  push-amd64:
+    runs-on: ubuntu-latest-amd64
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: docker/setup-qemu-action@v3.6.0
+      - uses: docker/setup-buildx-action@v3.10.0
+
+      - uses: docker/login-action@v3.4.0
+        with:
+          registry: git.cryptic.systems
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GIT_CRYPTIC_SYSTEMS_PACKAGE_REGISTRY_TOKEN }}
+
+      - name: Build and push image
+        run: |
+          TAG=$(echo ${{ github.ref_name }} | sed 's/v//gm')
+
+          docker buildx build \
+            --build-arg POSTFIXADMIN_VERSION=${{ github.ref_name }} \
+            --file Dockerfile \
+            --platform linux/amd64 \
+            --provenance false \
+            --push \
+            --tag git.cryptic.systems/volker.raschek/postfixadmin:${TAG}-amd64 \
+            .
+
+  push-manifest:
+    runs-on: ubuntu-latest
+    needs:
+    - push-arm64
+    - push-amd64
+    steps:
+      - uses: docker/login-action@v3.4.0
+        with:
+          registry: git.cryptic.systems
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GIT_CRYPTIC_SYSTEMS_PACKAGE_REGISTRY_TOKEN }}
+
+      - name: Create and push manifest
+        run: |
+          TAG=$(echo ${{ github.ref_name }} | sed 's/v//gm')
+
+          docker manifest create git.cryptic.systems/volker.raschek/postfixadmin:${TAG} \
+            --amend git.cryptic.systems/volker.raschek/postfixadmin:${TAG}-amd64 \
+            --amend git.cryptic.systems/volker.raschek/postfixadmin:${TAG}-arm64
+
+          docker manifest push git.cryptic.systems/volker.raschek/postfixadmin:${TAG}
+
+  sync-to-hub-docker-io:
+    needs:
+    - push-manifest
+    runs-on: ubuntu-latest
+    steps:
+    - name: Copy images to docker.io
+      run: |
+        TAG=$(echo ${{ github.ref_name }} | sed 's/v//gm')
+
+        apt-get update --yes
+        apt-get install --yes skopeo
+        skopeo copy \
+          --all \
+          --dest-password ${{ secrets.DOCKER_IO_PASSWORD }} \
+          --dest-username ${{ secrets.DOCKER_IO_USERNAME }} \
+          --src-password ${{ secrets.GIT_CRYPTIC_SYSTEMS_PACKAGE_REGISTRY_TOKEN }} \
+          --src-username volker.raschek \
+            docker://git.cryptic.systems/volker.raschek/postfixadmin:${TAG} \
+            docker://docker.io/volkerraschek/postfixadmin:${TAG}
