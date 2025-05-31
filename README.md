@@ -148,8 +148,8 @@ supported languages.
 ### POSTFIXADMIN_ENCRYPT
 
 Via `POSTFIXADMIN_ENCRYPT` can be the algorithm specified to encrypt passwords of users. The algorithm `md5crypt` is
-defined as default. Other possible values are documented
-[here](https://github.com/postfixadmin/postfixadmin/blob/master/DOCUMENTS/HASHING.md).
+defined as default. Further possible algorithms can be found in the
+[documentation](https://github.com/postfixadmin/postfixadmin/blob/master/DOCUMENTS/HASHING.md).
 
 ### POSTFIXADMIN_SETUP_PASSWORD
 
