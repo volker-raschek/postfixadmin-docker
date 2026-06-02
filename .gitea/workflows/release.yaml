@@ -9,7 +9,7 @@ jobs:
   push-arm64:
     runs-on: ubuntu-latest-arm64
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v6.0.3
       - uses: docker/setup-qemu-action@v4.1.0
         with:
           image: harbor.cryptic.systems/docker/tonistiigi/binfmt:latest
@@ -37,7 +37,7 @@ jobs:
   push-amd64:
     runs-on: ubuntu-latest-amd64
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v6.0.3
       - uses: docker/setup-qemu-action@v4.1.0
         with:
           image: harbor.cryptic.systems/docker/tonistiigi/binfmt:latest
