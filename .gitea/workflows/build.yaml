@@ -25,7 +25,7 @@ jobs:
 
       - uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a # v4.3.0
         with:
-          image: harbor.cryptic.systems/docker/tonistiigi/binfmt:qemu-v10.2.1 # renovate: datasource=docker registryUrl=https://docker.io depName=tonistiigi/binfmt extractVersion='qemu-(?<version>v\d+\.\d+\.\d+)$'
+          image: harbor.cryptic.systems/docker/tonistiigi/binfmt:qemu-v10.2.3 # renovate: datasource=docker registryUrl=https://docker.io depName=tonistiigi/binfmt extractVersion='qemu-(?<version>v\d+\.\d+\.\d+)$'
 
       - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
 
@@ -53,7 +53,7 @@ jobs:
 
       - uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a # v4.3.0
         with:
-          image: harbor.cryptic.systems/docker/tonistiigi/binfmt:qemu-v10.2.1 # renovate: datasource=docker registryUrl=https://docker.io depName=tonistiigi/binfmt extractVersion='qemu-(?<version>v\d+\.\d+\.\d+)$'
+          image: harbor.cryptic.systems/docker/tonistiigi/binfmt:qemu-v10.2.3 # renovate: datasource=docker registryUrl=https://docker.io depName=tonistiigi/binfmt extractVersion='qemu-(?<version>v\d+\.\d+\.\d+)$'
 
       - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
 
