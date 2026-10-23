@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.HARBOR_CRYPTIC_SYSTEMS_USERNAME }}
           password: ${{ secrets.HARBOR_CRYPTIC_SYSTEMS_PASSWORD }}
 
-      - uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a # v4.3.0
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
         with:
           image: harbor.cryptic.systems/docker/tonistiigi/binfmt:qemu-v10.2.3 # renovate: datasource=docker registryUrl=https://docker.io depName=tonistiigi/binfmt extractVersion='qemu-(?<version>v\d+\.\d+\.\d+)$'
 
@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.HARBOR_CRYPTIC_SYSTEMS_USERNAME }}
           password: ${{ secrets.HARBOR_CRYPTIC_SYSTEMS_PASSWORD }}
 
-      - uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a # v4.3.0
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
         with:
           image: harbor.cryptic.systems/docker/tonistiigi/binfmt:qemu-v10.2.3 # renovate: datasource=docker registryUrl=https://docker.io depName=tonistiigi/binfmt extractVersion='qemu-(?<version>v\d+\.\d+\.\d+)$'
 
